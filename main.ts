@@ -28,27 +28,6 @@ fs.createReadStream('./db.csv')
 
 app.use(express.json());
 
-
-// Endpoint to get user name by phone number
-app.get('/user/:phoneNumber', (req: Request, res: Response) => {
-  const phoneNumber = req.params.phoneNumber;
-
-  if (!phoneNumber) {
-    res.status(400).json({ error: 'Phone number is required' });
-    return;
-  }
-
-  const userName = userDatabase.get(phoneNumber);
-  
-  if (!userName) {
-    res.status(404).json({ error: 'User not found' });
-    return;
-  }
-
-    res.json({ name: userName });
-    return;
-});
-
 // Retell webhook endpoint for inbound calls
 app.post('/', (req: Request, res: Response) => {
   const { from_number, to_number, llm_id } = req.body;
